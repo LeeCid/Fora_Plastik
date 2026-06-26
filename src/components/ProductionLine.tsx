@@ -120,6 +120,7 @@ export function ProductionLine() {
           pin: true,
           scrub: 0.8,
           anticipatePin: 1,
+          refreshPriority: 1,
           invalidateOnRefresh: true,
           onUpdate: (self) => {
             progressRef.current = self.progress;

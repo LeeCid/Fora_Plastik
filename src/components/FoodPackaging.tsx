@@ -7,6 +7,7 @@ import { foodFeatures, foodLayers } from "@/data/content";
 
 export function FoodPackaging() {
   const rootRef = useRef<HTMLDivElement>(null);
+  const diagramRef = useRef<HTMLDivElement>(null);
   const layerRefs = useRef<(SVGGElement | null)[]>([]);
   const leadRefs = useRef<(SVGGElement | null)[]>([]);
 
@@ -14,12 +15,15 @@ export function FoodPackaging() {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     gsap.registerPlugin(ScrollTrigger);
     const ctx = gsap.context(() => {
+      const diagram = diagramRef.current;
+      if (!diagram) return;
+
       // One scrubbed timeline = single source of truth (no fighting tweens).
       // First half: the laminate fans OPEN to reveal four layers.
       // Second half: it seals back into one finished product surface.
       const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: rootRef.current,
+          trigger: diagram,
           start: "top 72%",
           end: "center 28%",
           scrub: 0.7,
@@ -65,7 +69,7 @@ export function FoodPackaging() {
             <span className="serif lowercase italic text-teal">katman katman güven.</span>
           </h2>
 
-          <LaminateDiagram layerRefs={layerRefs} leadRefs={leadRefs} />
+          <LaminateDiagram diagramRef={diagramRef} layerRefs={layerRefs} leadRefs={leadRefs} />
 
           <p className="mono mt-2 text-center text-[0.6rem] uppercase tracking-[0.25em] text-steel">
             Kaydırın — film kesiti katmanlarına ayrılır
@@ -99,9 +103,11 @@ export function FoodPackaging() {
 }
 
 function LaminateDiagram({
+  diagramRef,
   layerRefs,
   leadRefs,
 }: {
+  diagramRef: React.RefObject<HTMLDivElement>;
   layerRefs: React.MutableRefObject<(SVGGElement | null)[]>;
   leadRefs: React.MutableRefObject<(SVGGElement | null)[]>;
 }) {
@@ -127,7 +133,7 @@ function LaminateDiagram({
     `${TL.x + W},${y} ${TL.x + W + DX},${y - DY} ${TL.x + W + DX},${y - DY + TH} ${TL.x + W},${y + TH}`;
 
   return (
-    <div className="relative mt-12">
+    <div ref={diagramRef} className="relative mt-12">
       <svg viewBox="0 0 470 320" className="h-auto w-full overflow-visible">
         <defs>
           {/* print layer: CMYK micro-dots */}
