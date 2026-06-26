@@ -46,10 +46,6 @@ export function References() {
         ))}
       </div>
 
-      <p className="wrap mt-8 text-xs text-steel/60">
-        Marka adları yalnızca referans amaçlıdır; logo kullanım hakları ilgili
-        firmalara aittir.
-      </p>
     </section>
   );
 }

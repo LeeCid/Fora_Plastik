@@ -5,7 +5,8 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { materials } from "@/data/content";
-import { useIsMobile, useReducedMotion } from "@/lib/useReducedMotion";
+import { useReducedMotion } from "@/lib/useReducedMotion";
+import { StationScene } from "./StationScenes";
 
 const ProductionMaterial = dynamic(() => import("./ProductionMaterial"), {
   ssr: false,
@@ -87,14 +88,14 @@ export function ProductionLine() {
   const idxRef = useRef<HTMLSpanElement>(null);
   const progressRef = useRef(0);
   const reduced = useReducedMotion();
-  const mobile = useIsMobile();
   const [horizontal, setHorizontal] = useState(false);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
 
   useEffect(() => {
-    const horiz = !reduced && !mobile;
+    // Horizontal travel on every device that allows motion (incl. touch).
+    const horiz = !reduced;
     setHorizontal(horiz);
     if (!horiz) return;
 
@@ -126,7 +127,7 @@ export function ProductionLine() {
       });
     }, sectionRef);
     return () => ctx.revert();
-  }, [reduced, mobile]);
+  }, [reduced]);
 
   const showMaterial = mounted && horizontal;
 
@@ -190,34 +191,43 @@ function Station({
       {/* CSS material fallback (mobile / reduced) */}
       {!horizontal && <MaterialFallback accent={station.accent} index={index} />}
 
-      <div className="wrap relative z-10 grid w-full grid-cols-1 items-center gap-12 lg:grid-cols-12">
+      <div className="wrap relative z-10 grid w-full grid-cols-1 items-center gap-8 pt-20 lg:grid-cols-12 lg:gap-12 lg:pt-0">
         {/* copy */}
-        <div className="lg:col-span-6">
-          <span
-            className="display block text-[clamp(5rem,15vw,12rem)] leading-none"
-            style={{ color: station.accent, opacity: 0.18 }}
-          >
-            {station.no}
-          </span>
-          <p className="mono mt-3 text-[0.62rem] uppercase tracking-[0.24em]" style={{ color: station.accent }}>
+        <div className="lg:col-span-5">
+          <div className="flex items-center gap-3">
+            <span className="display text-[clamp(2.6rem,7vw,5rem)] leading-none" style={{ color: station.accent, opacity: 0.85 }}>
+              {station.no}
+            </span>
+            <span
+              className="mono flex items-center gap-2 text-[0.58rem] uppercase tracking-[0.2em] text-bone/70"
+            >
+              <span className="h-1.5 w-1.5 rounded-full motion-safe:animate-pulse" style={{ background: station.accent, boxShadow: `0 0 8px ${station.accent}` }} />
+              {station.status}
+            </span>
+          </div>
+          <p className="mono mt-4 text-[0.62rem] uppercase tracking-[0.24em]" style={{ color: station.accent }}>
             İstasyon {station.no} — {station.spec}
           </p>
-          <h3 className="display mt-3 text-[clamp(2rem,4vw,3.6rem)] text-bone">{station.title}</h3>
-          <p className="serif mt-5 max-w-md text-lg italic leading-relaxed text-bone/75">{station.body}</p>
-          {index === 0 && (
-            <div className="mt-7 flex flex-wrap gap-x-6 gap-y-2">
-              {materials.map((m) => (
-                <span key={m} className="mono text-xs text-bone/55">
-                  {m}
-                </span>
-              ))}
-            </div>
-          )}
+          <h3 className="display mt-2 text-[clamp(1.9rem,4vw,3.4rem)] text-bone">{station.title}</h3>
+          <p className="serif mt-4 max-w-md text-base italic leading-relaxed text-bone/75 md:text-lg">{station.body}</p>
+
+          {/* inline live spec readout — distinct per station, not a card */}
+          <div className="mt-6 flex flex-wrap gap-x-6 gap-y-1.5">
+            {station.readout.slice(0, 3).map((r) => (
+              <span key={r.k} className="mono text-[0.66rem] text-bone/55">
+                <span className="text-steel">{r.k}</span>{" "}
+                <span className="text-bone">{r.v}</span>
+              </span>
+            ))}
+            {index === 0 && materials.map((m) => (
+              <span key={m} className="mono text-[0.66rem] text-bone/40">{m}</span>
+            ))}
+          </div>
         </div>
 
-        {/* realistic machine HMI telemetry panel */}
-        <div className="lg:col-span-6 lg:flex lg:justify-end">
-          <HMIPanel station={station} />
+        {/* unique live process animation */}
+        <div className="lg:col-span-7 lg:flex lg:justify-end">
+          <StationScene index={index} />
         </div>
       </div>
 
@@ -239,67 +249,6 @@ function Station({
           }
         }
       `}</style>
-    </div>
-  );
-}
-
-function HMIPanel({ station }: { station: (typeof stations)[number] }) {
-  return (
-    <div className="w-full max-w-sm border border-bone/12 bg-void/40 backdrop-blur-md">
-      {/* header */}
-      <div className="flex items-center justify-between border-b border-bone/12 px-5 py-3">
-        <span className="mono flex items-center gap-2 text-[0.6rem] uppercase tracking-[0.2em] text-bone/70">
-          <span
-            className="h-1.5 w-1.5 rounded-full motion-safe:animate-pulse"
-            style={{ background: station.accent, boxShadow: `0 0 8px ${station.accent}` }}
-          />
-          {station.status}
-        </span>
-        <span className="mono text-[0.6rem] tracking-[0.2em] text-steel">FORA · {station.no}</span>
-      </div>
-
-      {/* telemetry rows */}
-      <div className="px-5 py-1">
-        {station.readout.map((r) => (
-          <div
-            key={r.k}
-            className="flex items-center justify-between border-b border-bone/8 py-2.5 last:border-b-0"
-          >
-            <span className="mono text-[0.62rem] uppercase tracking-[0.12em] text-steel">{r.k}</span>
-            <span className="mono text-sm text-bone">{r.v}</span>
-          </div>
-        ))}
-      </div>
-
-      {/* live signal bars */}
-      <div className="flex items-end gap-1 border-t border-bone/12 px-5 py-3.5">
-        {Array.from({ length: 28 }).map((_, i) => (
-          <span
-            key={i}
-            className="w-full motion-safe:animate-[eq_1.4s_ease-in-out_infinite]"
-            style={{
-              height: `${6 + ((i * 37) % 18)}px`,
-              background: `${station.accent}`,
-              opacity: 0.25 + ((i * 13) % 6) / 10,
-              animationDelay: `${(i % 7) * 0.12}s`,
-            }}
-          />
-        ))}
-        <style jsx>{`
-          @keyframes eq {
-            0%,
-            100% {
-              transform: scaleY(0.5);
-            }
-            50% {
-              transform: scaleY(1);
-            }
-          }
-          span {
-            transform-origin: bottom;
-          }
-        `}</style>
-      </div>
     </div>
   );
 }

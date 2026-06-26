@@ -158,6 +158,78 @@ html.lenis body {
   width: 0;
 }
 
+/* ---------- Process-scene animations (station machinery) ---------- */
+.spin-cw {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: spinCW 5s linear infinite;
+}
+.spin-ccw {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: spinCW 4s linear infinite reverse;
+}
+@keyframes spinCW {
+  to { transform: rotate(360deg); }
+}
+@keyframes granuleDrop {
+  0% { transform: translateY(-26px); opacity: 0; }
+  20% { opacity: 1; }
+  100% { transform: translateY(58px); opacity: 0; }
+}
+@keyframes bubbleBreathe {
+  0%, 100% { transform: scaleX(1); }
+  50% { transform: scaleX(1.05) scaleY(1.01); }
+}
+@keyframes sheenRise {
+  0% { transform: translateY(40px); opacity: 0; }
+  30% { opacity: 0.7; }
+  100% { transform: translateY(-150px); opacity: 0; }
+}
+@keyframes webFlow {
+  to { transform: translateX(-48px); }
+}
+@keyframes inkDab {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 1; }
+}
+@keyframes sealPress {
+  0%, 100% { transform: translateY(0); }
+  42% { transform: translateY(26px); }
+  58% { transform: translateY(26px); }
+}
+@keyframes heatFlash {
+  0%, 40%, 100% { opacity: 0; }
+  50% { opacity: 0.85; }
+}
+@keyframes bladeCut {
+  0%, 55%, 100% { transform: translateY(0); }
+  70% { transform: translateY(20px); }
+  85% { transform: translateY(0); }
+}
+@keyframes dropStack {
+  0% { transform: translateY(-30px); opacity: 0; }
+  60% { opacity: 1; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+@keyframes wrapDown {
+  0% { transform: scaleY(0); opacity: 0; }
+  20% { opacity: 1; }
+  100% { transform: scaleY(1); opacity: 0.9; }
+}
+@keyframes shipOut {
+  0%, 12% { transform: translateX(0); }
+  78%, 100% { transform: translateX(120px); opacity: 0; }
+}
+@keyframes truckRoll {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-1.2px); }
+}
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 0.95; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .lenis.lenis-smooth {
     scroll-behavior: smooth !important;

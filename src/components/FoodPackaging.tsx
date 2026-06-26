@@ -7,27 +7,36 @@ import { foodFeatures, foodLayers } from "@/data/content";
 
 export function FoodPackaging() {
   const rootRef = useRef<HTMLDivElement>(null);
-  const layerRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const layerRefs = useRef<(SVGGElement | null)[]>([]);
+  const leadRefs = useRef<(SVGGElement | null)[]>([]);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     gsap.registerPlugin(ScrollTrigger);
     const ctx = gsap.context(() => {
+      // laminate explodes apart as the section scrolls through
       layerRefs.current.forEach((l, i) => {
+        if (!l) return;
+        const dy = (i - 1.5) * 52;
+        gsap.fromTo(
+          l,
+          { y: 0 },
+          {
+            y: dy,
+            ease: "none",
+            scrollTrigger: { trigger: rootRef.current, start: "top 72%", end: "bottom 55%", scrub: 0.7 },
+          }
+        );
+      });
+      leadRefs.current.forEach((l, i) => {
         if (!l) return;
         gsap.fromTo(
           l,
-          { y: 0, rotateX: 0 },
+          { opacity: 0 },
           {
-            y: (i - 1.5) * 70,
-            rotateX: 9,
+            opacity: 1,
             ease: "none",
-            scrollTrigger: {
-              trigger: rootRef.current,
-              start: "top 68%",
-              end: "bottom 58%",
-              scrub: 0.8,
-            },
+            scrollTrigger: { trigger: rootRef.current, start: "top 60%", end: "center 60%", scrub: 0.7 },
           }
         );
       });
@@ -42,17 +51,13 @@ export function FoodPackaging() {
     return () => ctx.revert();
   }, []);
 
-  const layerColors = ["#1FA6A0", "#0C5A57", "#3a4148", "#ECE7DC"];
-
   return (
     <section id="gida" ref={rootRef} className="relative py-32 md:py-44">
       <div className="wrap grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
         <div className="relative">
           <div className="flex items-baseline justify-between">
             <span className="eyebrow">05 — Teknik Kalite</span>
-            <span className="mono text-[0.6rem] uppercase tracking-[0.3em] text-steel">
-              Gıda bölümü
-            </span>
+            <span className="mono text-[0.6rem] uppercase tracking-[0.3em] text-steel">Gıda bölümü</span>
           </div>
           <div className="rule mt-5" />
 
@@ -62,35 +67,10 @@ export function FoodPackaging() {
             <span className="serif lowercase italic text-teal">katman katman güven.</span>
           </h2>
 
-          <div className="relative mt-16 h-[320px]" style={{ perspective: "1100px" }}>
-            <div
-              className="absolute left-1/2 top-1/2 h-[190px] w-[300px] -translate-x-1/2 -translate-y-1/2"
-              style={{ transformStyle: "preserve-3d" }}
-            >
-              {foodLayers.map((layer, i) => (
-                <div
-                  key={layer.name}
-                  ref={(el) => { layerRefs.current[i] = el; }}
-                  className="absolute inset-0 flex items-center justify-between rounded-lg px-5 shadow-2xl ring-1 ring-bone/10"
-                  style={{
-                    background: `linear-gradient(135deg, ${layerColors[i]}dd, ${layerColors[i]}55)`,
-                    zIndex: foodLayers.length - i,
-                    color: i === 3 ? "#0a0b0d" : "#ECE7DC",
-                  }}
-                >
-                  <span className="mono text-[0.7rem] uppercase tracking-wider opacity-80">
-                    0{i + 1}
-                  </span>
-                  <div className="text-right">
-                    <p className="text-sm font-semibold">{layer.name}</p>
-                    <p className="text-[0.66rem] opacity-80">{layer.note}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          <p className="mono mt-3 text-center text-[0.6rem] uppercase tracking-[0.25em] text-steel">
-            Kaydırın — kesit katmanlarına ayrılır
+          <LaminateDiagram layerRefs={layerRefs} leadRefs={leadRefs} />
+
+          <p className="mono mt-2 text-center text-[0.6rem] uppercase tracking-[0.25em] text-steel">
+            Kaydırın — film kesiti katmanlarına ayrılır
           </p>
         </div>
 
@@ -117,5 +97,86 @@ export function FoodPackaging() {
         </div>
       </div>
     </section>
+  );
+}
+
+function LaminateDiagram({
+  layerRefs,
+  leadRefs,
+}: {
+  layerRefs: React.MutableRefObject<(SVGGElement | null)[]>;
+  leadRefs: React.MutableRefObject<(SVGGElement | null)[]>;
+}) {
+  // isometric film slabs, top → bottom of the laminate
+  const tops = ["#cfd6db", "#1FA6A0", "#7a828c", "#ECE7DC"];
+  const sides = ["#8b9298", "#0C5A57", "#474d54", "#b9b3a6"];
+  const baseY = [70, 122, 174, 226];
+
+  // iso tile geometry
+  const TL = { x: 70, y: 0 };
+  const W = 190;
+  const DX = 54;
+  const DY = 38;
+  const TH = 10;
+
+  const tile = (y: number) =>
+    `${TL.x},${y} ${TL.x + W},${y} ${TL.x + W + DX},${y - DY} ${TL.x + DX},${y - DY}`;
+  const front = (y: number) =>
+    `${TL.x},${y} ${TL.x + W},${y} ${TL.x + W},${y + TH} ${TL.x},${y + TH}`;
+  const sideFace = (y: number) =>
+    `${TL.x + W},${y} ${TL.x + W + DX},${y - DY} ${TL.x + W + DX},${y - DY + TH} ${TL.x + W},${y + TH}`;
+
+  return (
+    <div className="relative mt-12">
+      <svg viewBox="0 0 470 320" className="h-auto w-full overflow-visible">
+        <defs>
+          {/* print layer: CMYK micro-dots */}
+          <pattern id="cmyk" width="14" height="10" patternUnits="userSpaceOnUse" patternTransform="skewX(-55) scale(1)">
+            <circle cx="3" cy="3" r="1.6" fill="#19a7d6" />
+            <circle cx="8" cy="6" r="1.6" fill="#d63995" />
+            <circle cx="12" cy="3" r="1.6" fill="#e8c23b" />
+          </pattern>
+          {/* lamination adhesive cross-hatch */}
+          <pattern id="hatch" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="skewX(-55)">
+            <path d="M0 9 L9 0" stroke="rgba(236,231,220,0.4)" strokeWidth="0.7" />
+          </pattern>
+          <linearGradient id="barrierSheen" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stopColor="#1FA6A0" />
+            <stop offset="50%" stopColor="#67d6d0" />
+            <stop offset="100%" stopColor="#0C5A57" />
+          </linearGradient>
+        </defs>
+
+        {foodLayers.map((layer, i) => {
+          const y = baseY[i];
+          const overlays = ["url(#cmyk)", "url(#barrierSheen)", "url(#hatch)", "none"];
+          return (
+            <g key={layer.name} ref={(el) => { layerRefs.current[i] = el; }}>
+              {/* front + side thickness */}
+              <polygon points={sideFace(y)} fill={sides[i]} opacity="0.92" />
+              <polygon points={front(y)} fill={sides[i]} />
+              {/* top face */}
+              <polygon points={tile(y)} fill={tops[i]} opacity="0.95" />
+              {/* material overlay on the top face */}
+              <polygon points={tile(y)} fill={overlays[i]} opacity={i === 1 ? 0.55 : 0.85} />
+              {/* edge highlight */}
+              <polyline points={`${TL.x + DX},${y - DY} ${TL.x + W + DX},${y - DY}`} fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="1" />
+
+              {/* leader line + label */}
+              <g ref={(el) => { leadRefs.current[i] = el; }}>
+                <line x1={TL.x + W + DX} y1={y - DY / 2} x2={430} y2={y - DY / 2} stroke="rgba(236,231,220,0.25)" strokeWidth="1" />
+                <circle cx={430} cy={y - DY / 2} r="2" fill="#1FA6A0" />
+                <text x={300} y={y - DY / 2 - 5} className="mono" fontSize="8.5" letterSpacing="1" fill="#ECE7DC">
+                  0{i + 1} · {layer.name.toUpperCase()}
+                </text>
+                <text x={300} y={y - DY / 2 + 8} fontSize="8" fill="rgba(236,231,220,0.5)">
+                  {layer.note}
+                </text>
+              </g>
+            </g>
+          );
+        })}
+      </svg>
+    </div>
   );
 }

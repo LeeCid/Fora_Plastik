@@ -1,89 +1,126 @@
 "use client";
 
-import { motion } from "framer-motion";
-
 type Shape = "bag" | "cargo" | "pouch" | "roll";
 
-/** Animated SVG that morphs to reflect the selected product type in the quote form. */
+/**
+ * A small cinematic loop: the selected package is printed with the FORA mark,
+ * sealed, then ships out — repeating. Shape follows the chosen product type.
+ * Re-keyed by shape so the sequence restarts on each selection.
+ */
 export function PackagePreview({ shape, label }: { shape: Shape; label: string }) {
   return (
-    <div className="relative flex items-center gap-6 border-t border-bone/10 pt-8">
-      <div className="relative h-40 w-32 shrink-0">
-        <svg viewBox="0 0 128 160" className="h-full w-full">
-          <defs>
-            <linearGradient id="pkg" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="#15A0A0" stopOpacity="0.35" />
-              <stop offset="100%" stopColor="#0B4F4F" stopOpacity="0.55" />
-            </linearGradient>
-          </defs>
+    <div className="relative overflow-hidden border-t border-bone/10 pt-8">
+      <div className="flex items-center gap-7">
+        <div className="relative h-44 w-36 shrink-0">
+          <svg key={shape} viewBox="0 0 150 190" className="h-full w-full overflow-visible">
+            <defs>
+              <linearGradient id="pkgFill" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#1FA6A0" stopOpacity="0.28" />
+                <stop offset="100%" stopColor="#0c1413" stopOpacity="0.5" />
+              </linearGradient>
+            </defs>
 
-          {shape === "bag" && (
-            <motion.g
-              key="bag"
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
-            >
-              <path d="M40 36 q24 -16 48 0" fill="none" stroke="#9FC6C6" strokeWidth="3" />
-              <rect x="24" y="34" width="80" height="118" rx="6" fill="url(#pkg)" stroke="rgba(244,247,246,0.25)" />
-              <rect x="52" y="44" width="24" height="9" rx="4.5" fill="none" stroke="#9FC6C6" strokeWidth="2" />
-            </motion.g>
-          )}
+            {/* travelling package — prints, seals, ships, loops */}
+            <g style={{ animation: "pkgCycle 5.2s ease-in-out infinite", transformBox: "fill-box", transformOrigin: "center" }}>
+              <PackageBody shape={shape} />
 
-          {shape === "cargo" && (
-            <motion.g
-              key="cargo"
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
-            >
-              <rect x="22" y="26" width="84" height="128" rx="4" fill="url(#pkg)" stroke="rgba(244,247,246,0.25)" />
-              <rect x="22" y="26" width="84" height="20" fill="#0B4F4F" opacity="0.6" />
-              <line x1="22" y1="120" x2="106" y2="120" stroke="#9FC6C6" strokeDasharray="4 4" strokeWidth="1.5" />
-              <text x="64" y="92" textAnchor="middle" fontFamily="monospace" fontSize="8" fill="#9FC6C6" letterSpacing="1">
-                TR-000-000
-              </text>
-            </motion.g>
-          )}
+              {/* printed FORA mark */}
+              <g style={{ animation: "brandPrint 5.2s ease-in-out infinite" }}>
+                <text x="75" y="92" textAnchor="middle" fontFamily="'Brush Script MT','Segoe Script',cursive" fontStyle="italic" fontWeight="700" fontSize="26" fill="#ECE7DC">
+                  Fora
+                </text>
+                <text x="75" y="108" textAnchor="middle" className="mono" fontSize="6" letterSpacing="3" fill="#7FB9B6">
+                  PACKAGING
+                </text>
+              </g>
 
-          {shape === "pouch" && (
-            <motion.g
-              key="pouch"
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
-            >
-              <rect x="28" y="24" width="72" height="14" rx="3" fill="#0B4F4F" opacity="0.7" />
-              <path d="M28 38 h72 v104 q-36 14 -72 0 z" fill="url(#pkg)" stroke="rgba(244,247,246,0.25)" />
-              <line x1="34" y1="46" x2="94" y2="46" stroke="#9FC6C6" strokeWidth="1.5" opacity="0.6" />
-            </motion.g>
-          )}
+              {/* seal sweep highlight */}
+              <rect x="18" y="20" width="14" height="150" fill="#ECE7DC" opacity="0" style={{ animation: "sealSweep 5.2s ease-in-out infinite" }} />
+            </g>
 
-          {shape === "roll" && (
-            <motion.g
-              key="roll"
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
-            >
-              <ellipse cx="64" cy="44" rx="44" ry="14" fill="#0B4F4F" opacity="0.7" />
-              <rect x="20" y="44" width="88" height="84" fill="url(#pkg)" />
-              <ellipse cx="64" cy="128" rx="44" ry="14" fill="#0E6E6E" opacity="0.8" />
-              <ellipse cx="64" cy="44" rx="20" ry="6" fill="#061214" />
-            </motion.g>
-          )}
-        </svg>
+            {/* shipping motion lines */}
+            <g style={{ animation: "shipLines 5.2s ease-in-out infinite" }} opacity="0">
+              <line x1="6" y1="80" x2="26" y2="80" stroke="#1FA6A0" strokeWidth="1.5" />
+              <line x1="2" y1="95" x2="22" y2="95" stroke="#1FA6A0" strokeWidth="1.5" />
+              <line x1="8" y1="110" x2="28" y2="110" stroke="#1FA6A0" strokeWidth="1.5" />
+            </g>
+          </svg>
+        </div>
+
+        <div>
+          <p className="mono text-[0.6rem] uppercase tracking-[0.25em] text-steel">
+            Üretim önizlemesi
+          </p>
+          <p className="mt-1 display text-2xl text-bone">{label}</p>
+          <p className="serif mt-2 max-w-[15rem] text-sm italic text-bone/55">
+            Markanız basılır, paketlenir ve yola çıkar.
+          </p>
+        </div>
       </div>
 
-      <div>
-        <p className="mono text-[0.62rem] uppercase tracking-[0.25em] text-steel">
-          Önizleme
-        </p>
-        <p className="mt-1 display text-xl text-bone">{label}</p>
-        <p className="mt-2 text-xs text-bone/55">
-          Seçiminize göre ürün formu güncellenir.
-        </p>
-      </div>
+      <style jsx>{`
+        @keyframes pkgCycle {
+          0% { transform: translateX(-14px) scale(0.94); opacity: 0; }
+          12% { transform: translateX(0) scale(1); opacity: 1; }
+          70% { transform: translateX(0) scale(1); opacity: 1; }
+          92% { transform: translateX(120px) scale(0.96); opacity: 0; }
+          100% { transform: translateX(120px); opacity: 0; }
+        }
+        @keyframes brandPrint {
+          0%, 22% { opacity: 0; }
+          40%, 88% { opacity: 1; }
+          100% { opacity: 0; }
+        }
+        @keyframes sealSweep {
+          0%, 44% { transform: translateX(0); opacity: 0; }
+          52% { opacity: 0.6; }
+          66% { transform: translateX(108px); opacity: 0; }
+          100% { transform: translateX(108px); opacity: 0; }
+        }
+        @keyframes shipLines {
+          0%, 72% { opacity: 0; }
+          80% { opacity: 0.8; }
+          100% { opacity: 0; }
+        }
+      `}</style>
     </div>
+  );
+}
+
+function PackageBody({ shape }: { shape: Shape }) {
+  if (shape === "cargo") {
+    return (
+      <>
+        <rect x="26" y="22" width="98" height="150" rx="4" fill="url(#pkgFill)" stroke="rgba(236,231,220,0.28)" />
+        <rect x="26" y="22" width="98" height="22" fill="#0B4F4F" opacity="0.5" />
+        <line x1="26" y1="140" x2="124" y2="140" stroke="#7FB9B6" strokeDasharray="4 4" strokeWidth="1" opacity="0.6" />
+      </>
+    );
+  }
+  if (shape === "pouch") {
+    return (
+      <>
+        <rect x="32" y="20" width="86" height="14" rx="3" fill="#0B4F4F" opacity="0.6" />
+        <path d="M32 34 H118 V160 Q75 176 32 160 Z" fill="url(#pkgFill)" stroke="rgba(236,231,220,0.28)" />
+      </>
+    );
+  }
+  if (shape === "roll") {
+    return (
+      <>
+        <ellipse cx="75" cy="40" rx="48" ry="14" fill="#0B4F4F" opacity="0.6" />
+        <rect x="27" y="40" width="96" height="110" fill="url(#pkgFill)" />
+        <ellipse cx="75" cy="150" rx="48" ry="14" fill="#0E6E6E" opacity="0.7" />
+        <ellipse cx="75" cy="40" rx="20" ry="6" fill="#0a0b0d" />
+      </>
+    );
+  }
+  // bag (default)
+  return (
+    <>
+      <path d="M48 30 q27 -16 54 0" fill="none" stroke="#7FB9B6" strokeWidth="3" />
+      <rect x="28" y="28" width="94" height="142" rx="5" fill="url(#pkgFill)" stroke="rgba(236,231,220,0.28)" />
+      <rect x="60" y="38" width="30" height="9" rx="4.5" fill="none" stroke="#7FB9B6" strokeWidth="2" />
+    </>
   );
 }
