@@ -17,6 +17,7 @@ const shapeMap: Record<string, "bag" | "cargo" | "pouch" | "roll"> = {
 
 export function QuoteForm() {
   const [product, setProduct] = useState(productTypesForQuote[0]);
+  const [firma, setFirma] = useState("");
   const [sent, setSent] = useState(false);
 
   return (
@@ -41,7 +42,7 @@ export function QuoteForm() {
               satış ekibimizle netleştiririz.
             </p>
             <div className="mt-12">
-              <PackagePreview shape={shapeMap[product] ?? "bag"} label={product} />
+              <PackagePreview shape={shapeMap[product] ?? "bag"} label={product} firmName={firma} />
             </div>
           </div>
 
@@ -71,7 +72,15 @@ export function QuoteForm() {
                 }}
                 className="grid grid-cols-1 gap-x-8 gap-y-7 sm:grid-cols-2"
               >
-                <Field label="Firma adı" name="firma" required className="sm:col-span-2" />
+                <Field
+                  label="Firma adı"
+                  name="firma"
+                  required
+                  className="sm:col-span-2"
+                  value={firma}
+                  onChange={(e) => setFirma(e.target.value)}
+                  placeholder="markanızın adı"
+                />
                 <Field label="Telefon / WhatsApp" name="tel" type="tel" required />
                 <div className="flex flex-col gap-2">
                   <label className="mono text-[0.6rem] uppercase tracking-[0.22em] text-steel">
@@ -124,6 +133,8 @@ function Field({
   required = false,
   placeholder,
   className = "",
+  value,
+  onChange,
 }: {
   label: string;
   name: string;
@@ -131,6 +142,8 @@ function Field({
   required?: boolean;
   placeholder?: string;
   className?: string;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
   return (
     <div className={`flex flex-col gap-2 ${className}`}>
@@ -143,6 +156,8 @@ function Field({
         type={type}
         required={required}
         placeholder={placeholder}
+        value={value}
+        onChange={onChange}
         className="border-b border-bone/20 bg-transparent py-2.5 text-sm text-bone outline-none transition-colors placeholder:text-steel/40 focus:border-teal"
       />
     </div>

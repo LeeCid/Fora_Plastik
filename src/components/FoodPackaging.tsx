@@ -14,32 +14,45 @@ export function FoodPackaging() {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     gsap.registerPlugin(ScrollTrigger);
     const ctx = gsap.context(() => {
-      // laminate explodes apart as the section scrolls through
+      // laminate starts exploded, then CLOSES into the finished product
+      // surface as the section scrolls through.
       layerRefs.current.forEach((l, i) => {
         if (!l) return;
-        const dy = (i - 1.5) * 52;
+        const dy = (i - 1.5) * 58;
         gsap.fromTo(
           l,
-          { y: 0 },
+          { y: dy },
           {
-            y: dy,
+            y: 0,
             ease: "none",
-            scrollTrigger: { trigger: rootRef.current, start: "top 72%", end: "bottom 55%", scrub: 0.7 },
+            scrollTrigger: { trigger: rootRef.current, start: "top 78%", end: "center 52%", scrub: 0.7 },
           }
         );
       });
-      leadRefs.current.forEach((l, i) => {
+      // labels are visible while exploded, then fade as the layers seal up.
+      leadRefs.current.forEach((l) => {
         if (!l) return;
         gsap.fromTo(
           l,
-          { opacity: 0 },
+          { opacity: 1 },
           {
-            opacity: 1,
+            opacity: 0,
             ease: "none",
-            scrollTrigger: { trigger: rootRef.current, start: "top 60%", end: "center 60%", scrub: 0.7 },
+            scrollTrigger: { trigger: rootRef.current, start: "top 58%", end: "center 50%", scrub: 0.7 },
           }
         );
       });
+      // "product surface" tag appears once sealed.
+      gsap.fromTo(
+        "[data-product-tag]",
+        { opacity: 0, y: 8 },
+        {
+          opacity: 1,
+          y: 0,
+          ease: "none",
+          scrollTrigger: { trigger: rootRef.current, start: "center 56%", end: "center 44%", scrub: 0.7 },
+        }
+      );
       gsap.from("[data-food-feature]", {
         opacity: 0,
         x: 22,
@@ -176,6 +189,18 @@ function LaminateDiagram({
             </g>
           );
         })}
+
+        {/* product surface tag — revealed once the layers seal up */}
+        <g data-product-tag style={{ opacity: 0 }}>
+          <line x1={TL.x + W + DX} y1={baseY[1] - DY / 2} x2={430} y2={baseY[1] - DY / 2} stroke="rgba(31,166,160,0.6)" strokeWidth="1" />
+          <circle cx={430} cy={baseY[1] - DY / 2} r="2.4" fill="#1FA6A0" />
+          <text x={300} y={baseY[1] - DY / 2 - 5} className="mono" fontSize="9" letterSpacing="1.5" fill="#1FA6A0">
+            ÜRÜN YÜZEYİ
+          </text>
+          <text x={300} y={baseY[1] - DY / 2 + 8} fontSize="8" fill="rgba(236,231,220,0.6)">
+            tek gövde laminasyon
+          </text>
+        </g>
       </svg>
     </div>
   );

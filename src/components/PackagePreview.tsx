@@ -3,48 +3,74 @@
 type Shape = "bag" | "cargo" | "pouch" | "roll";
 
 /**
- * A small cinematic loop: the selected package is printed with the FORA mark,
- * sealed, then ships out — repeating. Shape follows the chosen product type.
- * Re-keyed by shape so the sequence restarts on each selection.
+ * Calm live preview: the selected package sits and gently breathes; the firm
+ * name typed into the form is printed onto it in real time. No fly-away loop.
  */
-export function PackagePreview({ shape, label }: { shape: Shape; label: string }) {
+export function PackagePreview({
+  shape,
+  label,
+  firmName,
+}: {
+  shape: Shape;
+  label: string;
+  firmName?: string;
+}) {
+  const name = (firmName || "").trim();
+  const printed = name ? name.toUpperCase().slice(0, 14) : "MARKANIZ";
+  const fontSize = printed.length > 9 ? 13 : printed.length > 6 ? 16 : 20;
+
   return (
     <div className="relative overflow-hidden border-t border-bone/10 pt-8">
       <div className="flex items-center gap-7">
         <div className="relative h-44 w-36 shrink-0">
-          <svg key={shape} viewBox="0 0 150 190" className="h-full w-full overflow-visible">
-            <defs>
-              <linearGradient id="pkgFill" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stopColor="#1FA6A0" stopOpacity="0.28" />
-                <stop offset="100%" stopColor="#0c1413" stopOpacity="0.5" />
-              </linearGradient>
-            </defs>
+          <div
+            className="absolute inset-0 motion-safe:animate-[pkgFloat_5s_ease-in-out_infinite]"
+            style={{ transformOrigin: "center" }}
+          >
+            <svg key={shape} viewBox="0 0 150 190" className="h-full w-full overflow-visible">
+              <defs>
+                <linearGradient id="pkgFill" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor="#1FA6A0" stopOpacity="0.3" />
+                  <stop offset="100%" stopColor="#0c1413" stopOpacity="0.55" />
+                </linearGradient>
+                <clipPath id="pkgClip">
+                  <rect x="20" y="20" width="110" height="150" rx="6" />
+                </clipPath>
+              </defs>
 
-            {/* travelling package — prints, seals, ships, loops */}
-            <g style={{ animation: "pkgCycle 5.2s ease-in-out infinite", transformBox: "fill-box", transformOrigin: "center" }}>
               <PackageBody shape={shape} />
 
-              {/* printed FORA mark */}
-              <g style={{ animation: "brandPrint 5.2s ease-in-out infinite" }}>
-                <text x="75" y="92" textAnchor="middle" fontFamily="'Brush Script MT','Segoe Script',cursive" fontStyle="italic" fontWeight="700" fontSize="26" fill="#ECE7DC">
-                  Fora
-                </text>
-                <text x="75" y="108" textAnchor="middle" className="mono" fontSize="6" letterSpacing="3" fill="#7FB9B6">
-                  PACKAGING
-                </text>
+              {/* printed firm name + brand line */}
+              <text
+                x="75"
+                y="90"
+                textAnchor="middle"
+                fontFamily="var(--font-display), Impact, sans-serif"
+                fontSize={fontSize}
+                letterSpacing="1"
+                fill="#ECE7DC"
+                style={{ textTransform: "uppercase" }}
+              >
+                {printed}
+              </text>
+              <text x="75" y="106" textAnchor="middle" className="mono" fontSize="6" letterSpacing="2.5" fill="#7FB9B6">
+                FORA PACKAGING
+              </text>
+
+              {/* light catching the film — calm sweep */}
+              <g clipPath="url(#pkgClip)">
+                <rect
+                  x="-30"
+                  y="20"
+                  width="20"
+                  height="150"
+                  fill="#ECE7DC"
+                  opacity="0.18"
+                  style={{ animation: "pkgSheen 4.5s ease-in-out infinite" }}
+                />
               </g>
-
-              {/* seal sweep highlight */}
-              <rect x="18" y="20" width="14" height="150" fill="#ECE7DC" opacity="0" style={{ animation: "sealSweep 5.2s ease-in-out infinite" }} />
-            </g>
-
-            {/* shipping motion lines */}
-            <g style={{ animation: "shipLines 5.2s ease-in-out infinite" }} opacity="0">
-              <line x1="6" y1="80" x2="26" y2="80" stroke="#1FA6A0" strokeWidth="1.5" />
-              <line x1="2" y1="95" x2="22" y2="95" stroke="#1FA6A0" strokeWidth="1.5" />
-              <line x1="8" y1="110" x2="28" y2="110" stroke="#1FA6A0" strokeWidth="1.5" />
-            </g>
-          </svg>
+            </svg>
+          </div>
         </div>
 
         <div>
@@ -53,34 +79,25 @@ export function PackagePreview({ shape, label }: { shape: Shape; label: string }
           </p>
           <p className="mt-1 display text-2xl text-bone">{label}</p>
           <p className="serif mt-2 max-w-[15rem] text-sm italic text-bone/55">
-            Markanız basılır, paketlenir ve yola çıkar.
+            {name ? (
+              <>
+                <span className="text-teal not-italic">{printed}</span> için, markanıza özel.
+              </>
+            ) : (
+              "Firma adını yazın — ambalajın üstünde belirsin."
+            )}
           </p>
         </div>
       </div>
 
       <style jsx>{`
-        @keyframes pkgCycle {
-          0% { transform: translateX(-14px) scale(0.94); opacity: 0; }
-          12% { transform: translateX(0) scale(1); opacity: 1; }
-          70% { transform: translateX(0) scale(1); opacity: 1; }
-          92% { transform: translateX(120px) scale(0.96); opacity: 0; }
-          100% { transform: translateX(120px); opacity: 0; }
+        @keyframes pkgFloat {
+          0%, 100% { transform: translateY(0) rotate(-0.5deg); }
+          50% { transform: translateY(-6px) rotate(0.5deg); }
         }
-        @keyframes brandPrint {
-          0%, 22% { opacity: 0; }
-          40%, 88% { opacity: 1; }
-          100% { opacity: 0; }
-        }
-        @keyframes sealSweep {
-          0%, 44% { transform: translateX(0); opacity: 0; }
-          52% { opacity: 0.6; }
-          66% { transform: translateX(108px); opacity: 0; }
-          100% { transform: translateX(108px); opacity: 0; }
-        }
-        @keyframes shipLines {
-          0%, 72% { opacity: 0; }
-          80% { opacity: 0.8; }
-          100% { opacity: 0; }
+        @keyframes pkgSheen {
+          0%, 100% { transform: translateX(0); }
+          50% { transform: translateX(170px); }
         }
       `}</style>
     </div>
@@ -115,7 +132,6 @@ function PackageBody({ shape }: { shape: Shape }) {
       </>
     );
   }
-  // bag (default)
   return (
     <>
       <path d="M48 30 q27 -16 54 0" fill="none" stroke="#7FB9B6" strokeWidth="3" />
