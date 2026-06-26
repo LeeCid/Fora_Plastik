@@ -5,13 +5,10 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { materials } from "@/data/content";
-import { useReducedMotion, useIsMobile } from "@/lib/useReducedMotion";
+import { useReducedMotion } from "@/lib/useReducedMotion";
 import { StationScene } from "./StationScenes";
 
 const ProductionMaterial = dynamic(() => import("./ProductionMaterial"), {
-  ssr: false,
-});
-const ProductionLine3D = dynamic(() => import("./ProductionLine3D"), {
   ssr: false,
 });
 
@@ -91,14 +88,10 @@ export function ProductionLine() {
   const idxRef = useRef<HTMLSpanElement>(null);
   const progressRef = useRef(0);
   const reduced = useReducedMotion();
-  const mobile = useIsMobile();
   const [horizontal, setHorizontal] = useState(false);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
-
-  // Real 3D machine line on capable (desktop) devices; SVG scenes on mobile.
-  const threeD = mounted && horizontal && !mobile;
 
   // Decide layout first — flips the track to flex-row in the DOM.
   useEffect(() => {
@@ -159,7 +152,7 @@ export function ProductionLine() {
     };
   }, [horizontal]);
 
-  const showMaterial = mounted && horizontal && mobile;
+  const showMaterial = mounted && horizontal;
 
   return (
     <section
@@ -168,17 +161,7 @@ export function ProductionLine() {
       className="relative overflow-hidden"
       data-cursor-label={horizontal ? "ÜRETİM HATTI" : undefined}
     >
-      {/* real 3D machine line (desktop) */}
-      {threeD && (
-        <div className="pointer-events-none absolute inset-0 z-0">
-          <ProductionLine3D progressRef={progressRef} />
-          {/* left scrim keeps the overlaid copy readable over the machines */}
-          <div className="absolute inset-0 bg-gradient-to-r from-void via-void/45 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-void/70 via-transparent to-void/30" />
-        </div>
-      )}
-
-      {/* living plastic material fallback (mobile) */}
+      {/* living plastic material — the moving production line itself */}
       {showMaterial && (
         <div className="pointer-events-none absolute inset-0 z-0">
           <ProductionMaterial progressRef={progressRef} />
@@ -204,7 +187,7 @@ export function ProductionLine() {
 
       <div ref={trackRef} className={horizontal ? "relative z-10 flex h-[100svh] w-max flex-nowrap" : "flex flex-col"}>
         {stations.map((s, i) => (
-          <Station key={s.no} station={s} index={i} horizontal={horizontal} threeD={threeD} />
+          <Station key={s.no} station={s} index={i} horizontal={horizontal} />
         ))}
       </div>
     </section>
@@ -215,12 +198,10 @@ function Station({
   station,
   index,
   horizontal,
-  threeD,
 }: {
   station: (typeof stations)[number];
   index: number;
   horizontal: boolean;
-  threeD: boolean;
 }) {
   return (
     <div
@@ -267,12 +248,10 @@ function Station({
           </div>
         </div>
 
-        {/* unique live process animation — SVG only when 3D isn't driving */}
-        {!threeD && (
-          <div className="lg:col-span-7 lg:flex lg:justify-end">
-            <StationScene index={index} />
-          </div>
-        )}
+        {/* unique live process animation */}
+        <div className="lg:col-span-7 lg:flex lg:justify-end">
+          <StationScene index={index} />
+        </div>
       </div>
 
       {/* continuous conveyor running along the bottom */}

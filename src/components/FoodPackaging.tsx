@@ -14,45 +14,30 @@ export function FoodPackaging() {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     gsap.registerPlugin(ScrollTrigger);
     const ctx = gsap.context(() => {
-      // laminate starts exploded, then CLOSES into the finished product
-      // surface as the section scrolls through.
+      // One scrubbed timeline = single source of truth (no fighting tweens).
+      // First half: the laminate fans OPEN to reveal four layers.
+      // Second half: it seals back into one finished product surface.
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: rootRef.current,
+          start: "top 72%",
+          end: "center 28%",
+          scrub: 0.7,
+        },
+      });
+
       layerRefs.current.forEach((l, i) => {
         if (!l) return;
-        const dy = (i - 1.5) * 58;
-        gsap.fromTo(
-          l,
-          { y: dy },
-          {
-            y: 0,
-            ease: "none",
-            scrollTrigger: { trigger: rootRef.current, start: "top 78%", end: "center 52%", scrub: 0.7 },
-          }
-        );
+        const dy = (i - 1.5) * 64;
+        tl.fromTo(l, { y: 0 }, { y: dy, ease: "sine.out" }, 0);
+        tl.to(l, { y: 0, ease: "sine.in" }, 0.5);
       });
-      // labels are visible while exploded, then fade as the layers seal up.
       leadRefs.current.forEach((l) => {
         if (!l) return;
-        gsap.fromTo(
-          l,
-          { opacity: 1 },
-          {
-            opacity: 0,
-            ease: "none",
-            scrollTrigger: { trigger: rootRef.current, start: "top 58%", end: "center 50%", scrub: 0.7 },
-          }
-        );
+        tl.fromTo(l, { opacity: 0 }, { opacity: 1, ease: "none" }, 0.05);
+        tl.to(l, { opacity: 0, ease: "none" }, 0.6);
       });
-      // "product surface" tag appears once sealed.
-      gsap.fromTo(
-        "[data-product-tag]",
-        { opacity: 0, y: 8 },
-        {
-          opacity: 1,
-          y: 0,
-          ease: "none",
-          scrollTrigger: { trigger: rootRef.current, start: "center 56%", end: "center 44%", scrub: 0.7 },
-        }
-      );
+      tl.fromTo("[data-product-tag]", { opacity: 0, y: 8 }, { opacity: 1, y: 0, ease: "none" }, 0.72);
       gsap.from("[data-food-feature]", {
         opacity: 0,
         x: 22,
@@ -120,10 +105,12 @@ function LaminateDiagram({
   layerRefs: React.MutableRefObject<(SVGGElement | null)[]>;
   leadRefs: React.MutableRefObject<(SVGGElement | null)[]>;
 }) {
-  // isometric film slabs, top → bottom of the laminate
+  // isometric film slabs, top → bottom of the laminate.
+  // Rest positions are a TIGHT stack (one product surface); scroll fans them
+  // open to reveal the four layers, then seals them back together.
   const tops = ["#cfd6db", "#1FA6A0", "#7a828c", "#ECE7DC"];
   const sides = ["#8b9298", "#0C5A57", "#474d54", "#b9b3a6"];
-  const baseY = [70, 122, 174, 226];
+  const baseY = [148, 162, 176, 190];
 
   // iso tile geometry
   const TL = { x: 70, y: 0 };
