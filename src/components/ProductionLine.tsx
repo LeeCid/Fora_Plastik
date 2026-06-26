@@ -93,22 +93,28 @@ export function ProductionLine() {
 
   useEffect(() => setMounted(true), []);
 
+  // Decide layout first — flips the track to flex-row in the DOM.
   useEffect(() => {
-    // Horizontal travel on every device that allows motion (incl. touch).
-    const horiz = !reduced;
-    setHorizontal(horiz);
-    if (!horiz) return;
+    setHorizontal(!reduced);
+  }, [reduced]);
+
+  // Build the horizontal scroll ONLY after the DOM has committed flex-row,
+  // otherwise the track width (and travel distance) is measured as ~0.
+  useEffect(() => {
+    if (!horizontal) return;
+    const track = trackRef.current;
+    const section = sectionRef.current;
+    if (!track || !section) return;
 
     gsap.registerPlugin(ScrollTrigger);
-    const ctx = gsap.context(() => {
-      const track = trackRef.current!;
-      const getDist = () => track.scrollWidth - window.innerWidth;
+    const getDist = () => Math.max(0, track.scrollWidth - window.innerWidth);
 
+    const ctx = gsap.context(() => {
       gsap.to(track, {
         x: () => -getDist(),
         ease: "none",
         scrollTrigger: {
-          trigger: sectionRef.current,
+          trigger: section,
           start: "top top",
           end: () => "+=" + getDist(),
           pin: true,
@@ -125,9 +131,26 @@ export function ProductionLine() {
           },
         },
       });
-    }, sectionRef);
-    return () => ctx.revert();
-  }, [reduced]);
+    }, section);
+
+    // Re-measure once everything that affects width has settled.
+    const refresh = () => ScrollTrigger.refresh();
+    const raf = requestAnimationFrame(() => requestAnimationFrame(refresh));
+    const t = setTimeout(refresh, 400);
+    window.addEventListener("load", refresh);
+    window.addEventListener("fora:ready", refresh);
+    if (typeof document !== "undefined" && (document as Document).fonts) {
+      (document as Document).fonts.ready.then(refresh).catch(() => {});
+    }
+
+    return () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(t);
+      window.removeEventListener("load", refresh);
+      window.removeEventListener("fora:ready", refresh);
+      ctx.revert();
+    };
+  }, [horizontal]);
 
   const showMaterial = mounted && horizontal;
 

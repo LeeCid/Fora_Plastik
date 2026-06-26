@@ -229,6 +229,30 @@ html.lenis body {
   0%, 100% { opacity: 0.45; }
   50% { opacity: 0.95; }
 }
+@keyframes airRise {
+  0% { transform: translateY(0); opacity: 0; }
+  30% { opacity: 0.7; }
+  100% { transform: translateY(-120px); opacity: 0; }
+}
+@keyframes armSwing {
+  0%, 100% { transform: rotate(-13deg); }
+  50% { transform: rotate(9deg); }
+}
+@keyframes forearmSwing {
+  0%, 100% { transform: rotate(16deg); }
+  50% { transform: rotate(-10deg); }
+}
+@keyframes dashFlow {
+  to { stroke-dashoffset: -28; }
+}
+@keyframes screwTurn {
+  to { stroke-dashoffset: -22; }
+}
+@keyframes wrapSpin {
+  0% { stroke-dashoffset: 0; opacity: 0; }
+  25% { opacity: 1; }
+  100% { stroke-dashoffset: -160; opacity: 1; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .lenis.lenis-smooth {

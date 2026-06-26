@@ -30,7 +30,12 @@ export function Loader() {
   }, []);
 
   useEffect(() => {
-    if (done) document.documentElement.classList.remove("lenis-stopped");
+    if (done) {
+      document.documentElement.classList.remove("lenis-stopped");
+      // Let scroll-driven layouts (pinned horizontal track) re-measure now
+      // that the overflow lock is gone and the page is at full height.
+      requestAnimationFrame(() => window.dispatchEvent(new Event("fora:ready")));
+    }
   }, [done]);
 
   return (
