@@ -1,9 +1,26 @@
 import { Logo } from "./Logo";
-import { company, values, materials } from "@/data/content";
+import { company, values, materials, journey } from "@/data/content";
 
 export function Footer() {
   return (
     <footer className="relative pt-24">
+      {/* Yolculuk kapanışı — granülden teslimata çizgi tamamlandı */}
+      <div className="wrap pb-14">
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
+          {journey.map((j, i) => (
+            <span key={j.id} className="flex items-center gap-2.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-teal shadow-[0_0_8px_rgba(31,166,160,0.8)]" />
+              <span className="mono text-[0.58rem] uppercase tracking-[0.2em] text-bone/55">
+                {String(i + 1).padStart(2, "0")} {j.label}
+              </span>
+              {i < journey.length - 1 && <span className="h-px w-5 bg-teal/40" />}
+            </span>
+          ))}
+          <span className="mono text-[0.58rem] uppercase tracking-[0.2em] text-teal">
+            — yolculuk tamamlandı
+          </span>
+        </div>
+      </div>
       <div className="rule" />
       <div className="wrap grid grid-cols-1 gap-12 py-16 md:grid-cols-12">
         <div className="md:col-span-5">

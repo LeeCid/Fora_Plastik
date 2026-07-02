@@ -13,14 +13,14 @@ type Env = { a: string; b: string; glow: string };
 // shrink cold → warehouse → loading dock / dusk
 // Belirgin şekilde aydınlık, doygun sahne tonları — siyah değil, renkli atmosfer.
 const ENVS: Env[] = [
-  { a: "#102022", b: "#1f4a44", glow: "rgba(67,198,192,0.36)" }, // granule — deep teal
-  { a: "#1c1209", b: "#3e200b", glow: "rgba(232,116,59,0.40)" }, // extrusion heat — amber
-  { a: "#17121b", b: "#2f1e38", glow: "rgba(214,57,149,0.26)" }, // print hall — magenta hint
-  { a: "#151a21", b: "#28323c", glow: "rgba(150,165,180,0.26)" }, // cutting / steel
-  { a: "#141f1a", b: "#294435", glow: "rgba(236,231,220,0.20)" }, // food bay — clean green
-  { a: "#0f2029", b: "#183b4e", glow: "rgba(67,198,192,0.34)" }, // shrink cold — cyan
-  { a: "#15181c", b: "#272e35", glow: "rgba(140,152,164,0.24)" }, // warehouse
-  { a: "#1c130c", b: "#40220e", glow: "rgba(232,116,59,0.36)" }, // dusk dock — warm
+  { a: "#142a2c", b: "#285c53", glow: "rgba(67,198,192,0.40)" }, // granule — deep teal
+  { a: "#241710", b: "#4c2810", glow: "rgba(232,116,59,0.44)" }, // extrusion heat — amber
+  { a: "#1d1722", b: "#3a2647", glow: "rgba(214,57,149,0.30)" }, // print hall — magenta hint
+  { a: "#1a2027", b: "#313d48", glow: "rgba(150,165,180,0.30)" }, // cutting / steel
+  { a: "#1a2620", b: "#345343", glow: "rgba(236,231,220,0.22)" }, // food bay — clean green
+  { a: "#142b35", b: "#1f4b62", glow: "rgba(67,198,192,0.38)" }, // shrink cold — cyan
+  { a: "#1b1f24", b: "#303941", glow: "rgba(140,152,164,0.28)" }, // warehouse
+  { a: "#241811", b: "#4e2a12", glow: "rgba(232,116,59,0.40)" }, // dusk dock — warm
 ];
 
 function hexToRgb(h: string) {

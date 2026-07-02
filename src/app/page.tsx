@@ -2,6 +2,7 @@ import { Nav } from "@/components/Nav";
 import { Hero } from "@/components/Hero";
 import { About } from "@/components/About";
 import { ProductionLine } from "@/components/ProductionLine";
+import { Marquee } from "@/components/Marquee";
 import { Products } from "@/components/Products";
 import { FoodPackaging } from "@/components/FoodPackaging";
 import { Shrink } from "@/components/Shrink";
@@ -19,6 +20,7 @@ export default function Home() {
       <Hero />
       <About />
       <ProductionLine />
+      <Marquee />
       <Products />
       <FoodPackaging />
       <Shrink />

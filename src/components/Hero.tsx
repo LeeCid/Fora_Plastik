@@ -74,7 +74,7 @@ export function Hero() {
             <span>Granülden</span>
           </span>
           <span className="line-mask hero-line">
-            <span className="text-steel">teslimata,</span>
+            <span className="outline-text">teslimata,</span>
           </span>
           <span className="line-mask hero-line">
             <span>
