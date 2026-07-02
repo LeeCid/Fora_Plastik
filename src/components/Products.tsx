@@ -19,7 +19,7 @@ export function Products() {
         <div className="rule mt-5" data-reveal />
         <h2 data-reveal className="display mt-12 max-w-4xl text-[clamp(1.9rem,5vw,4.4rem)] text-bone">
           Tek bir film şeridi,
-          <span className="serif lowercase italic text-teal"> dört ürün ailesine </span>
+          <span className="grad-accent"> dört ürün ailesine </span>
           ayrılır.
         </h2>
       </div>
@@ -64,7 +64,7 @@ function ProductRow({
             src={cat.image}
             alt={`${cat.name} — FORA Plastik üretimi`}
             loading="lazy"
-            className="h-full w-full scale-105 object-cover opacity-55 grayscale transition-all duration-[1.2s] ease-out group-hover:scale-100 group-hover:opacity-90 group-hover:grayscale-0"
+            className="h-full w-full scale-105 object-cover opacity-80 grayscale-[35%] transition-all duration-[1.2s] ease-out group-hover:scale-100 group-hover:opacity-100 group-hover:grayscale-0"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-void/70 to-transparent" />
           <span

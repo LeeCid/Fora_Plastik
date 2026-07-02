@@ -12,11 +12,12 @@ const config: Config = {
         void: "#0A0B0D",
         graphite: "#141619",
         concrete: "#1C1F23",
-        steel: "#7A828C",
+        steel: "#8B95A0",
         bone: "#ECE7DC", // warm off-white — primary text (anti-SaaS)
         // Brand thread — used as emissive accent ONLY, not wallpaper.
         teal: {
           DEFAULT: "#1FA6A0",
+          bright: "#43C6C0",
           deep: "#0C5A57",
           dark: "#073A38",
         },

@@ -24,9 +24,12 @@ export function FoodPackaging() {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: diagram,
-          start: "top 72%",
-          end: "center 28%",
+          // Diyagram ekrana girerken açılır, ortadayken kapanır — tüm
+          // aç-kapan seyri görünür alanda oynar.
+          start: "top 88%",
+          end: "bottom 32%",
           scrub: 0.7,
+          invalidateOnRefresh: true,
         },
       });
 
@@ -66,7 +69,7 @@ export function FoodPackaging() {
           <h2 className="display mt-10 text-[clamp(2rem,4.5vw,3.8rem)] text-bone">
             Gıda ambalajında
             <br />
-            <span className="serif lowercase italic text-teal">katman katman güven.</span>
+            <span className="grad-accent">katman katman güven.</span>
           </h2>
 
           <LaminateDiagram diagramRef={diagramRef} layerRefs={layerRefs} leadRefs={leadRefs} />

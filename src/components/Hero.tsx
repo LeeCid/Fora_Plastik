@@ -63,13 +63,13 @@ export function Hero() {
         <div className="absolute inset-0 bg-gradient-to-b from-void/40 via-transparent to-void" />
       </div>
 
-      <div className="wrap relative pt-28">
-        <p data-hero-fade className="eyebrow mb-8 flex items-center gap-3">
+      <div className="wrap relative pb-36 pt-28">
+        <p data-hero-fade className="eyebrow mb-8 flex items-center gap-3 before:!content-none">
           <span className="inline-block h-px w-10 bg-ember" />
           EST. {company.founded} — İKİTELLİ OSB · İSTANBUL
         </p>
 
-        <h1 className="display text-[clamp(3rem,11vw,10rem)] text-bone">
+        <h1 className="display text-[clamp(2.5rem,8.5vw,7.75rem)] text-bone">
           <span className="line-mask hero-line">
             <span>Granülden</span>
           </span>
@@ -78,7 +78,7 @@ export function Hero() {
           </span>
           <span className="line-mask hero-line">
             <span>
-              bir <span className="serif italic lowercase text-teal">ambalajın</span> yolculuğu
+              bir <span className="grad-accent">ambalajın</span> yolculuğu
             </span>
           </span>
         </h1>
@@ -94,8 +94,8 @@ export function Hero() {
               data-cursor-label="TEKLİF AL"
               className="group inline-flex items-center gap-4 text-bone"
             >
-              <span className="grid h-14 w-14 place-items-center rounded-full border border-bone/30 transition-colors group-hover:border-teal group-hover:bg-teal/10">
-                <span className="text-teal">→</span>
+              <span className="grid h-14 w-14 place-items-center rounded-full bg-teal transition-colors group-hover:bg-teal-bright">
+                <span className="text-[#04201e]">→</span>
               </span>
               <span className="text-left">
                 <span className="block text-sm font-semibold">Teklif Al</span>

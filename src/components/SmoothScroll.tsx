@@ -39,7 +39,21 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
 
     ScrollTrigger.refresh();
 
+    // Pinli üretim hattı sayfaya ~4 ekran yükseklik ekler; altındaki tüm
+    // trigger'ların doğru ölçülmesi için geç kaynaklar (loader, fontlar,
+    // görseller) oturduğunda global yeniden ölçüm yap.
+    const refresh = () => ScrollTrigger.refresh();
+    window.addEventListener("load", refresh);
+    window.addEventListener("fora:ready", refresh);
+    const t = window.setTimeout(refresh, 900);
+    if (document.fonts) {
+      document.fonts.ready.then(refresh).catch(() => {});
+    }
+
     return () => {
+      window.removeEventListener("load", refresh);
+      window.removeEventListener("fora:ready", refresh);
+      window.clearTimeout(t);
       gsap.ticker.remove(raf);
       lenis.destroy();
     };

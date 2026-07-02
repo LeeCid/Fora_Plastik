@@ -51,12 +51,12 @@ export function Nav() {
         <a
           href="#teklif"
           data-cursor
-          className="group inline-flex items-center gap-2.5 text-bone"
+          className="group inline-flex items-center gap-2.5 rounded-full bg-teal px-5 py-2.5 transition-colors hover:bg-teal-bright"
         >
-          <span className="mono whitespace-nowrap text-[0.68rem] uppercase tracking-[0.18em]">Teklif Al</span>
-          <span className="grid h-8 w-8 place-items-center rounded-full border border-bone/30 text-xs text-teal transition-colors group-hover:border-teal group-hover:bg-teal/10">
-            →
+          <span className="mono whitespace-nowrap text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#04201e]">
+            Teklif Al
           </span>
+          <span className="text-xs text-[#04201e] transition-transform group-hover:translate-x-0.5">→</span>
         </a>
       </nav>
     </header>

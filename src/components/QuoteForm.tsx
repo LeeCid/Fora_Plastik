@@ -35,7 +35,7 @@ export function QuoteForm() {
           <div>
             <h2 className="display text-[clamp(2.2rem,5vw,4.4rem)] text-bone">
               Ürününüz yola çıkmadan önce,
-              <span className="serif lowercase italic text-teal"> ambalajı hazır olmalı.</span>
+              <span className="grad-accent"> ambalajı hazır olmalı.</span>
             </h2>
             <p className="serif mt-6 max-w-md text-lg italic leading-relaxed text-bone/70">
               Markanıza özel üretim için birkaç bilgi yeterli. Teknik detayları

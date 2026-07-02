@@ -6,9 +6,10 @@
   --void: #0a0b0d;
   --graphite: #141619;
   --concrete: #1c1f23;
-  --steel: #7a828c;
+  --steel: #8b95a0;
   --bone: #ece7dc;
   --teal: #1fa6a0;
+  --teal-bright: #43c6c0;
   --teal-deep: #0c5a57;
   --ember: #e8743b;
 
@@ -74,12 +75,18 @@ html.lenis body {
 .display {
   font-family: var(--font-display), Impact, sans-serif;
   font-weight: 400;
-  line-height: 0.9;
-  letter-spacing: -0.015em;
+  /* Türkçe diakritikler (Ğ, Ü, İ, Ö) için satır yüksekliği: 0.9 üst üste bindiriyordu */
+  line-height: 1.06;
+  letter-spacing: 0.008em;
   text-transform: uppercase;
+  text-wrap: balance;
 }
+/* Editorial lead — Space Grotesk, düz (el yazısı/italik yok) */
 .serif {
-  font-family: var(--font-serif), Georgia, serif;
+  font-family: var(--font-serif), system-ui, sans-serif;
+  font-style: normal; /* .italic utility'lerini nötralize eder */
+  font-weight: 300;
+  letter-spacing: 0.002em;
 }
 .mono {
   font-family: var(--font-mono), ui-monospace, monospace;
@@ -90,6 +97,23 @@ html.lenis body {
   letter-spacing: 0.32em;
   font-size: 0.66rem;
   color: var(--steel);
+}
+.eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--teal);
+  margin-right: 10px;
+  vertical-align: 1px;
+}
+/* Marka gradyan vurgusu — başlık aksan kelimeleri */
+.grad-accent {
+  background: linear-gradient(94deg, #7fe7e1 0%, #1fa6a0 58%, #e8743b 135%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 .chapter-no {
   font-family: var(--font-mono), monospace;
@@ -120,7 +144,7 @@ html.lenis body {
   inset: -50%;
   z-index: 90;
   pointer-events: none;
-  opacity: 0.05;
+  opacity: 0.038;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   animation: grainShift 0.6s steps(3) infinite;
 }
@@ -137,9 +161,14 @@ html.lenis body {
   pointer-events: none;
   background: radial-gradient(
     120% 90% at 50% 40%,
-    transparent 55%,
-    rgba(0, 0, 0, 0.55) 100%
+    transparent 60%,
+    rgba(0, 0, 0, 0.34) 100%
   );
+}
+
+/* Anchor navigasyonu nav'ın altında kalmasın */
+section[id] {
+  scroll-margin-top: 88px;
 }
 
 /* hairline used sparingly instead of card borders */

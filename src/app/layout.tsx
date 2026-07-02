@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Anton, Inter, JetBrains_Mono, Instrument_Serif } from "next/font/google";
+import { Anton, Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { Stage } from "@/components/Stage";
@@ -22,9 +22,8 @@ const mono = JetBrains_Mono({
   variable: "--font-mono",
   display: "swap",
 });
-const serif = Instrument_Serif({
-  weight: "400",
-  style: ["normal", "italic"],
+const lead = Space_Grotesk({
+  weight: ["300", "400", "500"],
   subsets: ["latin"],
   variable: "--font-serif",
   display: "swap",
@@ -73,9 +72,29 @@ export default function RootLayout({
   return (
     <html
       lang="tr"
-      className={`${display.variable} ${sans.variable} ${mono.variable} ${serif.variable}`}
+      className={`${display.variable} ${sans.variable} ${mono.variable} ${lead.variable}`}
     >
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "FORA Plastik Ambalaj Sanayi",
+              url: "https://foraplastik.com",
+              foundingDate: "2020",
+              description:
+                "İkitelli OSB'de 2.000 m² tesiste aylık 400 ton kapasiteyle plastik ambalaj üretimi: kargo poşeti, mağaza/market poşeti, gıda ambalajı, shrink.",
+              address: {
+                "@type": "PostalAddress",
+                addressLocality: "Başakşehir",
+                addressRegion: "İstanbul",
+                addressCountry: "TR",
+              },
+            }),
+          }}
+        />
         <Stage />
         <SmoothScroll>{children}</SmoothScroll>
         <div className="vignette" aria-hidden />

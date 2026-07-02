@@ -252,8 +252,8 @@ function Flexo() {
         <line key={y} x1="458" y1={y} x2="514" y2={y} stroke="#E8743B" strokeWidth="1" opacity="0.5" style={{ animation: `pulseGlow 1.8s ease-in-out ${i * 0.2}s infinite` }} />
       ))}
       {/* printed Fora exiting on the web */}
-      <text x="486" y="118" textAnchor="middle" fontFamily="'Brush Script MT','Segoe Script',cursive" fontStyle="italic" fontWeight="700" fontSize="16" fill="#ECE7DC" style={{ animation: "inkDab 1.6s ease-in-out 1s infinite" }}>
-        Fora
+      <text x="486" y="116" textAnchor="middle" fontFamily="var(--font-mono), monospace" fontWeight="700" fontSize="11" letterSpacing="2.5" fill="#ECE7DC" style={{ animation: "inkDab 1.6s ease-in-out 1s infinite" }}>
+        FORA
       </text>
 
       <Callout x={cx} y={cy - R} tx={cx - 40} ty={70} label="MERKEZ TAMBUR" />
@@ -325,7 +325,7 @@ function BagMaker() {
       {[0, 1, 2].map((i) => (
         <g key={i} style={{ animation: `dropStack 2.2s ease-out ${i * 0.55}s infinite` }}>
           <rect x={404 + i * 4} y={210 + 0 - i * 0} width="86" height="48" rx="3" fill={F} stroke={S} strokeWidth="1" transform={`translate(0 ${-i * 6})`} />
-          <text x={447 + i * 4} y={238 - i * 6} textAnchor="middle" fontFamily="'Brush Script MT',cursive" fontStyle="italic" fontWeight="700" fontSize="12" fill="#1FA6A0">Fora</text>
+          <text x={447 + i * 4} y={238 - i * 6} textAnchor="middle" fontFamily="var(--font-mono), monospace" fontWeight="700" fontSize="9" letterSpacing="2" fill="#43C6C0">FORA</text>
         </g>
       ))}
 
@@ -386,7 +386,7 @@ function Palletiser() {
       ].map((b, i) => (
         <g key={i} style={{ animation: `dropStack 4s ease-out ${b.d}s infinite` }}>
           <rect x={b.x} y={b.y} width="48" height="34" rx="2" fill={F} stroke={S} strokeWidth="1" />
-          <text x={b.x + 24} y={b.y + 22} textAnchor="middle" fontFamily="'Brush Script MT',cursive" fontStyle="italic" fontWeight="700" fontSize="11" fill="#1FA6A0">Fora</text>
+          <text x={b.x + 24} y={b.y + 22} textAnchor="middle" fontFamily="var(--font-mono), monospace" fontWeight="700" fontSize="8.5" letterSpacing="1.5" fill="#43C6C0">FORA</text>
         </g>
       ))}
       {/* stretch wrap spiral */}

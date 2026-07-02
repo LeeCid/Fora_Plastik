@@ -11,15 +11,16 @@ type Env = { a: string; b: string; glow: string };
 
 // granule → extruder heat → print hall → steel cutting → food bay →
 // shrink cold → warehouse → loading dock / dusk
+// Daha aydınlık ve renkli tonlar — marka teal/ember paleti korunarak.
 const ENVS: Env[] = [
-  { a: "#0a0b0d", b: "#0b1413", glow: "rgba(31,166,160,0.16)" }, // granule
-  { a: "#0c0a09", b: "#1a0f08", glow: "rgba(232,116,59,0.20)" }, // extrusion heat
-  { a: "#0a0a0c", b: "#141016", glow: "rgba(232,116,59,0.12)" }, // print hall
-  { a: "#0b0c0d", b: "#15181b", glow: "rgba(122,130,140,0.16)" }, // cutting / steel
-  { a: "#0c0e0d", b: "#161a18", glow: "rgba(236,231,220,0.10)" }, // food bay (clean)
-  { a: "#090c0e", b: "#0d161a", glow: "rgba(31,166,160,0.14)" }, // shrink cold
-  { a: "#0a0b0d", b: "#121417", glow: "rgba(122,130,140,0.12)" }, // warehouse
-  { a: "#0b0a0a", b: "#190f0b", glow: "rgba(232,116,59,0.18)" }, // dusk dock
+  { a: "#0c1517", b: "#15332f", glow: "rgba(67,198,192,0.30)" }, // granule — deep teal
+  { a: "#140d08", b: "#2c1608", glow: "rgba(232,116,59,0.34)" }, // extrusion heat — amber
+  { a: "#110d13", b: "#221527", glow: "rgba(214,57,149,0.20)" }, // print hall — magenta hint
+  { a: "#0f1215", b: "#1d2329", glow: "rgba(140,152,164,0.22)" }, // cutting / steel
+  { a: "#0e1613", b: "#1d2c26", glow: "rgba(236,231,220,0.16)" }, // food bay — clean green
+  { a: "#0a161b", b: "#11262f", glow: "rgba(31,166,160,0.30)" }, // shrink cold — cyan
+  { a: "#0f1114", b: "#1a1e23", glow: "rgba(122,130,140,0.20)" }, // warehouse
+  { a: "#140e0a", b: "#2b160a", glow: "rgba(232,116,59,0.30)" }, // dusk dock — warm
 ];
 
 function hexToRgb(h: string) {
@@ -92,9 +93,17 @@ export function Stage() {
     <div className="fixed inset-0 -z-10" aria-hidden>
       <div ref={ref} className="absolute inset-0" />
       <div ref={glowRef} className="absolute inset-0 mix-blend-screen" />
+      {/* sabit marka renk yıkaması — köşelerde sıcak/soğuk denge */}
+      <div
+        className="absolute inset-0 mix-blend-screen"
+        style={{
+          background:
+            "radial-gradient(52% 38% at 88% 6%, rgba(232,116,59,0.10), transparent 70%), radial-gradient(46% 34% at 6% 94%, rgba(31,166,160,0.12), transparent 70%)",
+        }}
+      />
       {/* faint steel scan texture for material grounding */}
       <div
-        className="absolute inset-0 opacity-[0.04]"
+        className="absolute inset-0 opacity-[0.03]"
         style={{
           backgroundImage:
             "repeating-linear-gradient(180deg, rgba(236,231,220,0.5) 0px, rgba(236,231,220,0.5) 1px, transparent 1px, transparent 4px)",

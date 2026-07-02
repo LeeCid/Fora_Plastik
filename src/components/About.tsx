@@ -32,6 +32,10 @@ export function About() {
               data-reveal
               className={`py-6 ${i !== 0 ? "md:border-l md:border-bone/10 md:pl-8" : ""}`}
             >
+              <span
+                className="mb-4 block h-[3px] w-10 rounded-full"
+                style={{ background: ["#43C6C0", "#E8743B", "#1FA6A0", "#8B95A0"][i % 4] }}
+              />
               <div className="display flex items-baseline gap-1.5 text-[clamp(2.6rem,5vw,4.2rem)] text-bone">
                 <StatCounter value={s.value} />
                 {s.unit && <span className="mono text-base font-normal text-teal">{s.unit}</span>}
