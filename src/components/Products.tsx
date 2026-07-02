@@ -13,7 +13,10 @@ export function Products() {
     <section
       id="urunler"
       className="relative py-32 text-[#161d19] md:py-44"
-      style={{ background: "linear-gradient(180deg, #f2eee4 0%, #eae4d6 100%)" }}
+      style={{
+        background:
+          "linear-gradient(180deg, rgba(10,11,13,0.10) 0%, rgba(10,11,13,0) 7rem), linear-gradient(180deg, #d2cec3 0%, #c5c0b4 100%)",
+      }}
     >
       <div ref={headRef} className="wrap">
         <div className="flex items-baseline justify-between" data-reveal>
@@ -25,7 +28,7 @@ export function Products() {
         <div className="mt-5 h-px w-full bg-[#161d19]/15" data-reveal />
         <h2 data-reveal className="display mt-12 max-w-4xl text-[clamp(1.9rem,5vw,4.4rem)] text-[#161d19]">
           Tek bir film şeridi,
-          <span className="grad-accent"> dört ürün ailesine </span>
+          <span className="grad-accent-paper"> dört ürün ailesine </span>
           ayrılır.
         </h2>
       </div>

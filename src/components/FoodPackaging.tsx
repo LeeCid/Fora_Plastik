@@ -63,7 +63,7 @@ export function FoodPackaging() {
       id="gida"
       ref={rootRef}
       className="relative py-32 text-[#161d19] md:py-44"
-      style={{ background: "linear-gradient(180deg, #eae4d6 0%, #e2dbc9 100%)" }}
+      style={{ background: "linear-gradient(180deg, #c5c0b4 0%, #bab5a8 100%)" }}
     >
       <div className="wrap grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
         <div className="relative">
@@ -78,7 +78,7 @@ export function FoodPackaging() {
           <h2 className="display mt-10 text-[clamp(2rem,4.5vw,3.8rem)] text-[#161d19]">
             Gıda ambalajında
             <br />
-            <span className="grad-accent">katman katman güven.</span>
+            <span className="grad-accent-paper">katman katman güven.</span>
           </h2>
 
           <LaminateDiagram diagramRef={diagramRef} layerRefs={layerRefs} leadRefs={leadRefs} />

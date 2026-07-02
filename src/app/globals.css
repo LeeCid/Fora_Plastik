@@ -116,6 +116,12 @@ html.lenis body {
   background-clip: text;
   color: transparent;
 }
+.grad-accent-paper {
+  background: linear-gradient(94deg, #2b9c95 0%, #0c5a57 62%, #9f5638 135%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
 /* Kontur tipografi — dolu/kontur/gradyan üçlü başlık sistemi */
 .outline-text {
   color: transparent;
