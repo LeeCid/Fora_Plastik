@@ -11,16 +11,16 @@ type Env = { a: string; b: string; glow: string };
 
 // granule → extruder heat → print hall → steel cutting → food bay →
 // shrink cold → warehouse → loading dock / dusk
-// Daha aydınlık ve renkli tonlar — marka teal/ember paleti korunarak.
+// Belirgin şekilde aydınlık, doygun sahne tonları — siyah değil, renkli atmosfer.
 const ENVS: Env[] = [
-  { a: "#0c1517", b: "#15332f", glow: "rgba(67,198,192,0.30)" }, // granule — deep teal
-  { a: "#140d08", b: "#2c1608", glow: "rgba(232,116,59,0.34)" }, // extrusion heat — amber
-  { a: "#110d13", b: "#221527", glow: "rgba(214,57,149,0.20)" }, // print hall — magenta hint
-  { a: "#0f1215", b: "#1d2329", glow: "rgba(140,152,164,0.22)" }, // cutting / steel
-  { a: "#0e1613", b: "#1d2c26", glow: "rgba(236,231,220,0.16)" }, // food bay — clean green
-  { a: "#0a161b", b: "#11262f", glow: "rgba(31,166,160,0.30)" }, // shrink cold — cyan
-  { a: "#0f1114", b: "#1a1e23", glow: "rgba(122,130,140,0.20)" }, // warehouse
-  { a: "#140e0a", b: "#2b160a", glow: "rgba(232,116,59,0.30)" }, // dusk dock — warm
+  { a: "#102022", b: "#1f4a44", glow: "rgba(67,198,192,0.36)" }, // granule — deep teal
+  { a: "#1c1209", b: "#3e200b", glow: "rgba(232,116,59,0.40)" }, // extrusion heat — amber
+  { a: "#17121b", b: "#2f1e38", glow: "rgba(214,57,149,0.26)" }, // print hall — magenta hint
+  { a: "#151a21", b: "#28323c", glow: "rgba(150,165,180,0.26)" }, // cutting / steel
+  { a: "#141f1a", b: "#294435", glow: "rgba(236,231,220,0.20)" }, // food bay — clean green
+  { a: "#0f2029", b: "#183b4e", glow: "rgba(67,198,192,0.34)" }, // shrink cold — cyan
+  { a: "#15181c", b: "#272e35", glow: "rgba(140,152,164,0.24)" }, // warehouse
+  { a: "#1c130c", b: "#40220e", glow: "rgba(232,116,59,0.36)" }, // dusk dock — warm
 ];
 
 function hexToRgb(h: string) {
@@ -98,7 +98,7 @@ export function Stage() {
         className="absolute inset-0 mix-blend-screen"
         style={{
           background:
-            "radial-gradient(52% 38% at 88% 6%, rgba(232,116,59,0.10), transparent 70%), radial-gradient(46% 34% at 6% 94%, rgba(31,166,160,0.12), transparent 70%)",
+            "radial-gradient(52% 38% at 88% 6%, rgba(232,116,59,0.16), transparent 70%), radial-gradient(46% 34% at 6% 94%, rgba(31,166,160,0.18), transparent 70%)",
         }}
       />
       {/* faint steel scan texture for material grounding */}

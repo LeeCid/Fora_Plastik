@@ -166,8 +166,8 @@ export function ProductionLine() {
       {showMaterial && (
         <div className="pointer-events-none absolute inset-0 z-0">
           <ProductionMaterial progressRef={progressRef} />
-          <div className="absolute inset-0 bg-gradient-to-r from-void via-transparent to-void/70" />
-          <div className="absolute inset-0 bg-gradient-to-t from-void/80 via-transparent to-void/40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-void/60 via-transparent to-void/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-void/50 via-transparent to-void/25" />
         </div>
       )}
 

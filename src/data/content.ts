@@ -11,7 +11,9 @@ export const company = {
   tagline: "Markanız için doğan ambalaj.",
   heroLead:
     "Ambalaj, ürününüzün müşteriye ilk temas ettiği yerdir. FORA Plastik; markanız için yüksek kapasiteli, esnek ve kaliteli ambalaj çözümleri üretir.",
-  phone: "+90 212 000 00 00",
+  phone: "+90 531 918 27 35",
+  // wa.me formatı: ülke kodu dahil, boşluksuz/artısız
+  whatsapp: "905319182735",
   email: "info@foraplastik.com",
 };
 

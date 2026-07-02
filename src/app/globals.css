@@ -75,8 +75,9 @@ html.lenis body {
 .display {
   font-family: var(--font-display), Impact, sans-serif;
   font-weight: 400;
-  /* Türkçe diakritikler (Ğ, Ü, İ, Ö) için satır yüksekliği: 0.9 üst üste bindiriyordu */
-  line-height: 1.06;
+  /* Türkçe diakritikler: üstte Ğ/Ü/İ, altta Ç/Ş çengelleri — ikisi için de
+     pay gerekir. 1.06 alttaki cedilla'ları hâlâ bindiriyordu. */
+  line-height: 1.16;
   letter-spacing: 0.008em;
   text-transform: uppercase;
   text-wrap: balance;
@@ -161,8 +162,8 @@ html.lenis body {
   pointer-events: none;
   background: radial-gradient(
     120% 90% at 50% 40%,
-    transparent 60%,
-    rgba(0, 0, 0, 0.34) 100%
+    transparent 64%,
+    rgba(0, 0, 0, 0.2) 100%
   );
 }
 

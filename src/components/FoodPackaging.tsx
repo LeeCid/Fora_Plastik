@@ -57,16 +57,25 @@ export function FoodPackaging() {
   }, []);
 
   return (
-    <section id="gida" ref={rootRef} className="relative py-32 md:py-44">
+    // "Temiz oda" — gıda bölümü açık renk bant: steril, laboratuvar hissi.
+    // Koyu sinematik akışı kıran bilinçli art-direction kontrastı.
+    <section
+      id="gida"
+      ref={rootRef}
+      className="relative py-32 text-[#161d19] md:py-44"
+      style={{ background: "linear-gradient(180deg, #f0ece2 0%, #e6e0d0 100%)" }}
+    >
       <div className="wrap grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
         <div className="relative">
           <div className="flex items-baseline justify-between">
-            <span className="eyebrow">05 — Teknik Kalite</span>
-            <span className="mono text-[0.6rem] uppercase tracking-[0.3em] text-steel">Gıda bölümü</span>
+            <span className="eyebrow !text-[#5a6660]">05 — Teknik Kalite</span>
+            <span className="mono text-[0.6rem] uppercase tracking-[0.3em] text-[#5a6660]">
+              Temiz oda · Gıda bölümü
+            </span>
           </div>
-          <div className="rule mt-5" />
+          <div className="mt-5 h-px w-full bg-[#161d19]/15" />
 
-          <h2 className="display mt-10 text-[clamp(2rem,4.5vw,3.8rem)] text-bone">
+          <h2 className="display mt-10 text-[clamp(2rem,4.5vw,3.8rem)] text-[#161d19]">
             Gıda ambalajında
             <br />
             <span className="grad-accent">katman katman güven.</span>
@@ -74,13 +83,13 @@ export function FoodPackaging() {
 
           <LaminateDiagram diagramRef={diagramRef} layerRefs={layerRefs} leadRefs={leadRefs} />
 
-          <p className="mono mt-2 text-center text-[0.6rem] uppercase tracking-[0.25em] text-steel">
+          <p className="mono mt-2 text-center text-[0.6rem] uppercase tracking-[0.25em] text-[#5a6660]">
             Kaydırın — film kesiti katmanlarına ayrılır
           </p>
         </div>
 
         <div data-food-features>
-          <p className="mono mb-6 text-[0.62rem] uppercase tracking-[0.3em] text-steel">
+          <p className="mono mb-6 text-[0.62rem] uppercase tracking-[0.3em] text-[#5a6660]">
             Kuru gıda & makarna ambalajı
           </p>
           <ul className="grid grid-cols-1 sm:grid-cols-2">
@@ -88,14 +97,14 @@ export function FoodPackaging() {
               <li
                 key={f}
                 data-food-feature
-                className="flex items-center gap-3 border-t border-bone/10 py-4 text-sm text-bone/80"
+                className="flex items-center gap-3 border-t border-[#161d19]/12 py-4 text-sm text-[#161d19]/85"
               >
-                <span className="mono text-[0.6rem] text-teal">0{i + 1}</span>
+                <span className="mono text-[0.6rem] text-teal-deep">0{i + 1}</span>
                 {f}
               </li>
             ))}
           </ul>
-          <p className="serif mt-8 text-lg italic leading-relaxed text-bone/60">
+          <p className="serif mt-8 text-lg italic leading-relaxed text-[#161d19]/70">
             İki veya çok katlı yapı kombinasyonlarıyla, hızlı paketleme
             makinelerine uygun güçlü yapışma özelliğine sahip çözümler.
           </p>
@@ -117,8 +126,9 @@ function LaminateDiagram({
   // isometric film slabs, top → bottom of the laminate.
   // Rest positions are a TIGHT stack (one product surface); scroll fans them
   // open to reveal the four layers, then seals them back together.
-  const tops = ["#cfd6db", "#1FA6A0", "#7a828c", "#ECE7DC"];
-  const sides = ["#8b9298", "#0C5A57", "#474d54", "#b9b3a6"];
+  // Açık "temiz oda" zemininde okunacak tonlar
+  const tops = ["#c3ccd3", "#1FA6A0", "#6d7681", "#d9d2c1"];
+  const sides = ["#7d858d", "#0C5A57", "#3c434b", "#a89f8d"];
   const baseY = [148, 162, 176, 190];
 
   // iso tile geometry
@@ -147,7 +157,7 @@ function LaminateDiagram({
           </pattern>
           {/* lamination adhesive cross-hatch */}
           <pattern id="hatch" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="skewX(-55)">
-            <path d="M0 9 L9 0" stroke="rgba(236,231,220,0.4)" strokeWidth="0.7" />
+            <path d="M0 9 L9 0" stroke="rgba(240,236,226,0.55)" strokeWidth="0.7" />
           </pattern>
           <linearGradient id="barrierSheen" x1="0" y1="0" x2="1" y2="0">
             <stop offset="0%" stopColor="#1FA6A0" />
@@ -173,12 +183,12 @@ function LaminateDiagram({
 
               {/* leader line + label */}
               <g ref={(el) => { leadRefs.current[i] = el; }}>
-                <line x1={TL.x + W + DX} y1={y - DY / 2} x2={430} y2={y - DY / 2} stroke="rgba(236,231,220,0.25)" strokeWidth="1" />
-                <circle cx={430} cy={y - DY / 2} r="2" fill="#1FA6A0" />
-                <text x={300} y={y - DY / 2 - 5} className="mono" fontSize="8.5" letterSpacing="1" fill="#ECE7DC">
+                <line x1={TL.x + W + DX} y1={y - DY / 2} x2={430} y2={y - DY / 2} stroke="rgba(22,29,25,0.3)" strokeWidth="1" />
+                <circle cx={430} cy={y - DY / 2} r="2" fill="#0C5A57" />
+                <text x={300} y={y - DY / 2 - 5} className="mono" fontSize="8.5" letterSpacing="1" fill="#161d19">
                   0{i + 1} · {layer.name.toUpperCase()}
                 </text>
-                <text x={300} y={y - DY / 2 + 8} fontSize="8" fill="rgba(236,231,220,0.5)">
+                <text x={300} y={y - DY / 2 + 8} fontSize="8" fill="rgba(22,29,25,0.6)">
                   {layer.note}
                 </text>
               </g>
@@ -188,12 +198,12 @@ function LaminateDiagram({
 
         {/* product surface tag — revealed once the layers seal up */}
         <g data-product-tag style={{ opacity: 0 }}>
-          <line x1={TL.x + W + DX} y1={baseY[1] - DY / 2} x2={430} y2={baseY[1] - DY / 2} stroke="rgba(31,166,160,0.6)" strokeWidth="1" />
-          <circle cx={430} cy={baseY[1] - DY / 2} r="2.4" fill="#1FA6A0" />
-          <text x={300} y={baseY[1] - DY / 2 - 5} className="mono" fontSize="9" letterSpacing="1.5" fill="#1FA6A0">
+          <line x1={TL.x + W + DX} y1={baseY[1] - DY / 2} x2={430} y2={baseY[1] - DY / 2} stroke="rgba(12,90,87,0.6)" strokeWidth="1" />
+          <circle cx={430} cy={baseY[1] - DY / 2} r="2.4" fill="#0C5A57" />
+          <text x={300} y={baseY[1] - DY / 2 - 5} className="mono" fontSize="9" letterSpacing="1.5" fill="#0C5A57">
             ÜRÜN YÜZEYİ
           </text>
-          <text x={300} y={baseY[1] - DY / 2 + 8} fontSize="8" fill="rgba(236,231,220,0.6)">
+          <text x={300} y={baseY[1] - DY / 2 + 8} fontSize="8" fill="rgba(22,29,25,0.65)">
             tek gövde laminasyon
           </text>
         </g>
