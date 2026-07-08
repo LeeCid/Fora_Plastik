@@ -111,7 +111,7 @@ export function QuoteForm() {
                 />
                 <Field label="Telefon / WhatsApp" name="tel" type="tel" required />
                 <div className="flex flex-col gap-2">
-                  <label className="mono text-[0.6rem] uppercase tracking-[0.22em] text-steel">
+                  <label className="mono text-[0.6rem] uppercase tracking-[0.22em] text-bone/90">
                     Ürün tipi
                   </label>
                   <select
@@ -178,7 +178,7 @@ function Field({
 }) {
   return (
     <div className={`flex flex-col gap-2 ${className}`}>
-      <label htmlFor={name} className="mono text-[0.6rem] uppercase tracking-[0.22em] text-steel">
+      <label htmlFor={name} className="mono text-[0.6rem] uppercase tracking-[0.22em] text-bone/90">
         {label} {required && <span className="text-ember">*</span>}
       </label>
       <input
