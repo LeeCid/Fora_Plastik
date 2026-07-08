@@ -30,8 +30,8 @@ export function Nav() {
         <div className="absolute inset-0 -z-10 bg-void/55" />
       )}
       <nav className="wrap flex items-center justify-between">
-        <a href="#top" aria-label="FORA Plastik" data-cursor className="block w-[192px]">
-          <Logo className="h-11 w-auto" />
+        <a href="#top" aria-label="FORA Plastik" data-cursor className="block w-[210px]">
+          <Logo className="h-[52px] w-auto" />
         </a>
 
         <ul className="hidden items-center gap-9 lg:flex">

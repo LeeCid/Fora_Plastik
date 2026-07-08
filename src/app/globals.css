@@ -14,8 +14,8 @@
   --ember: #e8743b;
 
   /* Continuous "Stage" environment colours (updated by scroll). */
-  --stage-a: #1a2b2a;
-  --stage-b: #2a413c;
+  --stage-a: #2a3d3c;
+  --stage-b: #3a534d;
   --stage-glow: rgba(31, 166, 160, 0.16);
 }
 

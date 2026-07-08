@@ -62,7 +62,7 @@ export function FoodPackaging() {
     <section
       id="gida"
       ref={rootRef}
-      className="relative py-32 text-[#161d19] md:py-44"
+      className="relative pt-12 pb-32 text-[#161d19] md:pt-24 md:pb-44"
       style={{ background: "linear-gradient(180deg, #c5c0b4 0%, #bab5a8 100%)" }}
     >
       <div className="wrap grid grid-cols-1 items-center gap-16 lg:grid-cols-2">

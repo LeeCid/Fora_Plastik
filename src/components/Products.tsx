@@ -12,7 +12,7 @@ export function Products() {
   return (
     <section
       id="urunler"
-      className="relative py-32 text-[#161d19] md:py-44"
+      className="relative pt-32 pb-12 text-[#161d19] md:pt-44 md:pb-24"
       style={{
         background:
           "linear-gradient(180deg, rgba(10,11,13,0.10) 0%, rgba(10,11,13,0) 7rem), linear-gradient(180deg, #d2cec3 0%, #c5c0b4 100%)",

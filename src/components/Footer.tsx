@@ -24,7 +24,7 @@ export function Footer() {
       <div className="rule" />
       <div className="wrap grid grid-cols-1 gap-12 py-16 md:grid-cols-12">
         <div className="md:col-span-5">
-          <Logo className="h-14 w-[230px]" />
+          <Logo className="h-16 w-[248px]" />
           <p className="serif mt-6 max-w-xs text-lg italic leading-relaxed text-bone/55">
             {company.legal}. {company.area} tesiste, aylık {company.capacity}{" "}
             kapasiteyle markanıza özel ambalaj.
