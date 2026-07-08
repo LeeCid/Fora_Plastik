@@ -45,7 +45,7 @@ export function QuoteForm() {
     <section id="teklif" className="relative py-32 md:py-44">
       <div className="wrap">
         <div className="flex items-baseline justify-between">
-          <span className="eyebrow">08 — Teslimat</span>
+          <span className="eyebrow">07 — Teslimat</span>
           <span className="mono text-[0.6rem] uppercase tracking-[0.3em] text-steel">
             Yola çıkış
           </span>

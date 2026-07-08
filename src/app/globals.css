@@ -14,8 +14,8 @@
   --ember: #e8743b;
 
   /* Continuous "Stage" environment colours (updated by scroll). */
-  --stage-a: #0a0b0d;
-  --stage-b: #0c1413;
+  --stage-a: #1a2b2a;
+  --stage-b: #2a413c;
   --stage-glow: rgba(31, 166, 160, 0.16);
 }
 
@@ -187,8 +187,8 @@ html.lenis body {
   pointer-events: none;
   background: radial-gradient(
     120% 90% at 50% 40%,
-    transparent 64%,
-    rgba(0, 0, 0, 0.2) 100%
+    transparent 70%,
+    rgba(0, 0, 0, 0.12) 100%
   );
 }
 

@@ -6,7 +6,6 @@ import { Marquee } from "@/components/Marquee";
 import { Products } from "@/components/Products";
 import { FoodPackaging } from "@/components/FoodPackaging";
 import { Shrink } from "@/components/Shrink";
-import { References } from "@/components/References";
 import { QuoteForm } from "@/components/QuoteForm";
 import { Footer } from "@/components/Footer";
 import { StickyCTA } from "@/components/StickyCTA";
@@ -24,7 +23,6 @@ export default function Home() {
       <Products />
       <FoodPackaging />
       <Shrink />
-      <References />
       <QuoteForm />
       <Footer />
       <StickyCTA />

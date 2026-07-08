@@ -106,23 +106,6 @@ export const shrink = {
   ],
 };
 
-// Referans firmalar — dokümandaki REFERANS listesi.
-// Logolar marka kimliği korunarak vektör olarak yeniden çizilmiştir.
-export const references = [
-  { id: "saray", name: "Saray Aluminium" },
-  { id: "kervan", name: "Kervan" },
-  { id: "sistem", name: "Sistem Alüminyum" },
-  { id: "nurlu", name: "Nurlu" },
-  { id: "ozyildirim", name: "Özyıldırım" },
-  { id: "arged", name: "Arged Makina" },
-  { id: "savas", name: "Savaş Plastik" },
-  { id: "guncan", name: "Güncan Plastik" },
-  { id: "teka", name: "Teka Plastik" },
-  { id: "siesta", name: "Siesta" },
-  { id: "hastin", name: "Hastin" },
-  { id: "raftiye", name: "Raftiye" },
-];
-
 export const values = [
   "İnsana ve çevreye saygı",
   "Yüksek üretim kalitesi",
@@ -150,6 +133,5 @@ export const journey = [
   { id: "urun", label: "Ürün" },
   { id: "gida", label: "Gıda" },
   { id: "shrink", label: "Shrink" },
-  { id: "referans", label: "Referans" },
   { id: "teklif", label: "Teklif" },
 ];

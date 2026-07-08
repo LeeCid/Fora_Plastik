@@ -60,7 +60,7 @@ export function Hero() {
       {/* film material */}
       <div className="hero-film absolute inset-0 -z-[1]">
         {show3D ? <FilmScene /> : <FallbackFilm />}
-        <div className="absolute inset-0 bg-gradient-to-b from-void/40 via-transparent to-void" />
+        <div className="absolute inset-0 bg-gradient-to-b from-void/25 via-transparent to-void/70" />
       </div>
 
       <div className="wrap relative pb-36 pt-28">
