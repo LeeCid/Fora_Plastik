@@ -60,11 +60,11 @@ function ProductRow({
         ref={ref}
         className="wrap grid grid-cols-1 items-center gap-8 py-10 md:grid-cols-12 md:py-14"
       >
-        {/* image — gün ışığında, tam renk */}
+        {/* image — gün ışığında, tam renk. Mobilde yazının ALTINDA (order-2). */}
         <div
           data-reveal
-          className={`relative aspect-[16/10] overflow-hidden ring-1 ring-[#161d19]/10 md:col-span-6 ${
-            flip ? "md:order-2" : ""
+          className={`relative order-2 aspect-[16/10] overflow-hidden ring-1 ring-[#161d19]/10 md:col-span-6 ${
+            flip ? "md:order-2" : "md:order-1"
           }`}
         >
           <img
@@ -81,10 +81,10 @@ function ProductRow({
           />
         </div>
 
-        {/* copy */}
+        {/* copy — mobilde resmin ÜSTÜNDE (order-1). */}
         <div
           data-reveal
-          className={`md:col-span-6 ${flip ? "md:order-1 md:pr-10" : "md:pl-10"}`}
+          className={`order-1 md:col-span-6 ${flip ? "md:order-1 md:pr-10" : "md:order-2 md:pl-10"}`}
         >
           <span className="display text-6xl text-[#161d19]/10 md:text-8xl">
             {String(index + 1).padStart(2, "0")}
