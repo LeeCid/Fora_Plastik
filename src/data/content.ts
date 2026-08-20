@@ -44,7 +44,7 @@ export const productCategories = [
     short: "El geçmeli · yumuşak saplı · takviyeli",
     desc: "Mağazalarda kullanılan el geçmeli poşet, yumuşak saplı poşet ve takviyeli poşet ürünlerinin tamamını yüksek kalite standartlarında üretiyoruz.",
     items: ["El geçmeli poşet", "Yumuşak saplı poşet", "Takviyeli poşet", "Kulplu poşet"],
-    image: "/products/store-bags-grid.png",
+    image: "/products/store-bags-studio.jpg",
     accent: "#15A0A0",
   },
   {
@@ -53,7 +53,7 @@ export const productCategories = [
     short: "Atlet · hışır · rulo",
     desc: "Marketlerde en çok atlet poşet, hışır poşet ve rulo poşet kullanılır. Tüm bu ürünlerde en iyi kalitede baskı makineleriyle üretim yapıyoruz.",
     items: ["Atlet poşet", "Hışır poşet", "Rulo poşet"],
-    image: "/products/market-bags-grid.png",
+    image: "/products/market-bags-studio.jpg",
     accent: "#0E6E6E",
   },
   {
@@ -62,7 +62,7 @@ export const productCategories = [
     short: "Logo baskılı · şeffaf · yapışkanlı · cepli",
     desc: "Firmanıza özel logo baskılı kargo poşeti imalatını yüksek kalitede sağlıyoruz. Baskılı, şeffaf, yapışkanlı, cepli ve güvenlik bantlı e-ticaret kargo poşetleri üretiyoruz.",
     items: ["Baskılı kargo poşeti", "Şeffaf kargo poşeti", "Cepli kargo poşeti", "Güvenlik bantlı / seri no.lu"],
-    image: "/products/cargo-bags-grid.png",
+    image: "/products/cargo-bags-studio.jpg",
     accent: "#15A0A0",
   },
   {
@@ -71,7 +71,7 @@ export const productCategories = [
     short: "Standart veya özel ölçü",
     desc: "Standart ölçülerde kilitli poşet ya da size özel istediğiniz ebat ve özelliklerde imalat yapabiliyoruz.",
     items: ["Standart kilitli poşet", "Özel ölçü kilitli poşet"],
-    image: "/products/cargo-bags-grid2.png",
+    image: "/products/zip-bags-studio.jpg",
     accent: "#0B4F4F",
   },
 ];

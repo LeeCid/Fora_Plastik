@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRef } from "react";
 import { productCategories } from "@/data/content";
 import { useReveal } from "@/lib/useReveal";
@@ -67,11 +68,12 @@ function ProductRow({
             flip ? "md:order-2" : "md:order-1"
           }`}
         >
-          <img
+          <Image
             src={cat.image}
             alt={`${cat.name} — FORA Plastik üretimi`}
-            loading="lazy"
-            decoding="async"
+            fill
+            sizes="(min-width: 768px) 50vw, 100vw"
+            quality={90}
             className="h-full w-full scale-105 object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-100"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#161d19]/15 to-transparent" />
